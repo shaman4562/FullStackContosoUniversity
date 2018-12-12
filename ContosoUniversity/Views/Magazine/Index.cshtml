@@ -1,0 +1,83 @@
+﻿@model ContosoUniversity.ViewModels.MagazineIndexData
+
+@{
+    ViewBag.Title = "Magazines";
+}
+
+<h2>Magazines</h2>
+
+<p>
+    @Html.ActionLink("Create New Magazine", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Title</th>
+    </tr>
+
+    @foreach (var item in Model.Magazines)
+    {
+        string selectedRow = "";
+        if (item.MagazineID == ViewBag.MagazineID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.MagazineID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.MagazineID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MagazineID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MagazineID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@if (Model.Articles != null)
+{
+    <h3>Articles from selected Magazine</h3>
+    <table class="table">
+        <tr>
+            <th>Title</th>
+
+        </tr>
+
+        @foreach (var item in Model.Articles)
+        {
+            string selectedRow = "";
+            if (item.ArticleID == ViewBag.ArticleID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @Html.ActionLink("Select", "Index", new { articleID = item.ArticleID }) |
+                    @Html.ActionLink("Edit", "Edit", new { articleID = item.ArticleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { articleID = item.ArticleID })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}
+
+@if (Model.Text != null)
+{
+    <h3>Text of selected Article</h3>
+    <table class="table">               
+            <tr>                
+                <td>
+                    @Model.Text
+                </td>
+            </tr>        
+
+    </table>
+}
